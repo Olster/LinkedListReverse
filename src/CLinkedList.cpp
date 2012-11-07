@@ -40,7 +40,7 @@ void CLinkedList::reverse() {
 
 void CLinkedList::reverse(TNode* current, TNode* prev) {
     if (current == 0) {
-	
+
         // Let's make sure that the LL will be deleted properly
         m_headNode = prev;
 
