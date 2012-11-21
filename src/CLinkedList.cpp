@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "CLinkedList.h"
 
 CLinkedList::CLinkedList() {

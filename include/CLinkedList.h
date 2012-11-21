@@ -1,8 +1,6 @@
 #ifndef CLINKEDLIST_H
 #define CLINKEDLIST_H
 
-#include <iostream>
-
 #define DISALLOW_COPY_AND_ASSIGN(type) \
     type(const type& var);             \
     void operator=(const type& type)
