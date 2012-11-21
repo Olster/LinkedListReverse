@@ -3,67 +3,78 @@
 #include "CLinkedList.h"
 
 CLinkedList::CLinkedList() {
-    m_headNode = 0;
+  head_node_ = 0;
+  conductor_ = head_node_;
 }
 
 CLinkedList::~CLinkedList() {
-    Release(m_headNode);
+  Release(head_node_);
 }
 
 void CLinkedList::Release(TNode* node) {
-    if (node == 0) {
-        return;
-    }
+  if (node == 0) {
+    return;
+  }
 
-    Release(node->next);
+  Release(node->next);
 
-    delete node;
-    node = 0;
+  delete node;
+  node = 0;
 }
 
 void CLinkedList::Add(int val) {
-    AddHelper(m_headNode, val);
+  AddHelper(head_node_, val);
 }
 
 void CLinkedList::AddHelper(TNode* &node, int val) {
-    if (node == 0) {
-        node = new TNode;
+  if (node == 0) {
+    node = new TNode;
 
-        node->next = 0;
-        node->val = val;
-    } else {
-        AddHelper(node->next, val);
-    }
+    node->next = 0;
+    node->val = val;
+  } else {
+    AddHelper(node->next, val);
+  }
+}
+
+CLinkedList::TNode* CLinkedList::GetHead() {
+  return head_node_;
+}
+
+CLinkedList::TNode* CLinkedList::GetNext() {
+  conductor_ = conductor_->next;
+
+  return conductor_;
 }
 
 void CLinkedList::Reverse() {
-    ReverseHelper(m_headNode, 0);
+  ReverseHelper(head_node_, 0);
 }
 
 void CLinkedList::ReverseHelper(TNode* current, TNode* prev) {
-    if (current == 0) {
+  if (current == 0) {
 
-        // Let's make sure that the LL will be deleted properly
-        m_headNode = prev;
+    // Let's make sure that the LL will be deleted properly
+    head_node_ = prev;
 
-        return;
-    }
+    return;
+  }
 
-    ReverseHelper(current->next, current);
+  ReverseHelper(current->next, current);
 
-    current->next = prev;
+  current->next = prev;
 }
 
 void CLinkedList::Print() {
-    PrintHelper(m_headNode);
+  PrintHelper(head_node_);
 }
 
 void CLinkedList::PrintHelper(const TNode* node) {
-    if (node == 0) {
-        return;
-    }
+  if (node == 0) {
+    return;
+  }
 
-    std::cout << node->val << std::endl;
+  std::cout << node->val << std::endl;
 
-    PrintHelper(node->next);
+  PrintHelper(node->next);
 }
