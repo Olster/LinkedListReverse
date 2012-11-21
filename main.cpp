@@ -8,20 +8,20 @@ int main() {
 
     CLinkedList list;
 
-    list.add(1);
-    list.add(2);
-    list.add(3);
-    list.add(4);
-    list.add(5);
-    list.add(6);
-    list.add(7);
+    list.Add(1);
+    list.Add(2);
+    list.Add(3);
+    list.Add(4);
+    list.Add(5);
+    list.Add(6);
+    list.Add(7);
 
-    list.print();
+    list.Print();
 
-    list.reverse();
+    list.Reverse();
     cout << endl;
 
-    list.print();
+    list.Print();
 
     return 0;
 }

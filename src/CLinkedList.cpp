@@ -5,40 +5,40 @@ CLinkedList::CLinkedList() {
 }
 
 CLinkedList::~CLinkedList() {
-    release(m_headNode);
+    Release(m_headNode);
 }
 
-void CLinkedList::release(TNode* node) {
+void CLinkedList::Release(TNode* node) {
     if (node == 0) {
         return;
     }
 
-    release(node->next);
+    Release(node->next);
 
     delete node;
     node = 0;
 }
 
-void CLinkedList::add(int val) {
-    add(m_headNode, val);
+void CLinkedList::Add(int val) {
+    AddHelper(m_headNode, val);
 }
 
-void CLinkedList::add(TNode* &node, int val) {
+void CLinkedList::AddHelper(TNode* &node, int val) {
     if (node == 0) {
         node = new TNode;
 
         node->next = 0;
         node->val = val;
     } else {
-        add(node->next, val);
+        AddHelper(node->next, val);
     }
 }
 
-void CLinkedList::reverse() {
-    reverse(m_headNode, 0);
+void CLinkedList::Reverse() {
+    ReverseHelper(m_headNode, 0);
 }
 
-void CLinkedList::reverse(TNode* current, TNode* prev) {
+void CLinkedList::ReverseHelper(TNode* current, TNode* prev) {
     if (current == 0) {
 
         // Let's make sure that the LL will be deleted properly
@@ -47,21 +47,21 @@ void CLinkedList::reverse(TNode* current, TNode* prev) {
         return;
     }
 
-    reverse(current->next, current);
+    ReverseHelper(current->next, current);
 
     current->next = prev;
 }
 
-void CLinkedList::print() {
-    print(m_headNode);
+void CLinkedList::Print() {
+    PrintHelper(m_headNode);
 }
 
-void CLinkedList::print(const TNode* node) {
+void CLinkedList::PrintHelper(const TNode* node) {
     if (node == 0) {
         return;
     }
 
-    cout << node->val << endl;
+    std::cout << node->val << std::endl;
 
-    print(node->next);
+    PrintHelper(node->next);
 }

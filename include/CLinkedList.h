@@ -7,9 +7,6 @@
     type(const type& var);             \
     void operator=(const type& type)
 
-using std::cout;
-using std::endl;
-
 class CLinkedList {
     public:
         CLinkedList();
@@ -20,21 +17,21 @@ class CLinkedList {
             TNode* next;
         };
 
-        void add(int val);
-        void add(TNode* &node, int val);
+        void Add(int val);
+        void AddHelper(TNode* &node, int val);
 
-        void reverse();
-        void reverse(TNode* current, TNode* prev);
+        void Reverse();
+        void ReverseHelper(TNode* current, TNode* prev);
 
-        void release(TNode* node);
+        void Release(TNode* node);
 
-        void print();
-        void print(const TNode* node);
+        void Print();
+        void PrintHelper(const TNode* node);
 
     private:
-        DISALLOW_COPY_AND_ASSIGN(CLinkedList);
-
         TNode* m_headNode;
+
+        DISALLOW_COPY_AND_ASSIGN(CLinkedList);
 };
 
 #endif // CLINKEDLIST_H
