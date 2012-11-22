@@ -18,6 +18,7 @@ class CLinkedList {
   void Add(int val);
   void AddHelper(TNode* &node, int val);
 
+  // TODO(Olster) Make a class for TNode
   TNode* GetHead();
   TNode* GetNext();
 

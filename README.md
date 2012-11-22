@@ -1,1 +1,1 @@
-Simply showing how to reverse a linked list in C++
+Implementation of a linked list with function Reverse() that reverses the list.
