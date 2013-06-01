@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "CLinkedList.h"
+#include "list/LinkedList.h"
 
 using namespace std;
 
 int main() {
-  CLinkedList list;
+  list::LinkedList<int> list;
 
   list.Add(1);
   list.Add(2);
@@ -15,12 +15,17 @@ int main() {
   list.Add(6);
   list.Add(7);
 
-  list.Print();
+  while (list.GetNext()) {
+    cout << list.GetNext()->val << endl;
+  }
 
   list.Reverse();
   cout << endl;
 
-  list.Print();
+  cout << list.GetHead()->val << endl;
+  for (int i = 0; i < list.GetSize(); i++) {
+    cout << list.GetNext()->val << endl;
+  }
 
   return 0;
 }
