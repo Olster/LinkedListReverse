@@ -1,5 +1,4 @@
-Reverse a Linked List
+Linked List woth Reverse() function
 ======
 
 Implementation of a linked list with function Reverse() that reverses the list.
-It's also possibble to do the same thing with templated linked list.
