@@ -1,6 +1,8 @@
 #ifndef LIST_LINKEDLIST_H_
 #define LIST_LINKEDLIST_H_
 
+// TODO(Olster): Read more on move semantics and perfect forwarding
+
 namespace list {
 
 namespace {
@@ -21,7 +23,8 @@ class LinkedList {
 
   void operator=(const LinkedList<T>& other) = delete;
   LinkedList(const LinkedList<T>& other) = delete;
-  LinkedList(const LinkedList<T>&& other) = delete;
+  void operator=(LinkedList<T>&& other) = delete;
+  LinkedList(LinkedList<T>&& other) = delete;
 
   void Add(T val);
 
@@ -58,9 +61,15 @@ class LinkedList {
 template <class T>
 class LinkedList<T>::Iterator {
  public:
-  Iterator();
+  Iterator() {}
   Iterator(const Iterator& other)
    : m_currentNode(other.m_currentNode) {}
+
+  Iterator(Iterator&& other)
+   : m_currentNode(other.m_currentNode) {
+    other.m_currentNode = nullptr;
+  }
+
   explicit Iterator(Node<T>* node)
    : m_currentNode(node) {}
 
@@ -73,6 +82,17 @@ class LinkedList<T>::Iterator {
     return *this;
   }
 
+  Iterator& operator=(const Iterator&& other) {
+    if (&other == this) {
+      return *this;
+    }
+
+    m_currentNode = other.m_currentNode;
+    other.m_currentNode = nullptr;
+
+    return *this;
+  }
+
   Iterator& operator++() {
     m_currentNode = m_currentNode->next;
     return *this;
@@ -80,6 +100,10 @@ class LinkedList<T>::Iterator {
 
   T operator*() {
     return m_currentNode->val;
+  }
+
+  T& operator->() {
+    return &m_currentNode->val;
   }
 
   bool operator==(const Iterator& other) {
