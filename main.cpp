@@ -15,16 +15,14 @@ int main() {
   list.Add(6);
   list.Add(7);
 
-  list::LinkedList<int>::Iterator it = list.Begin();
-  for (int i = 0; i < list.GetSize(); i++, ++it) {
+  for (auto it = list.Begin(); it != list.End(); ++it) {
     cout << *it << endl;
   }
 
   list.Reverse();
   cout << endl;
 
-  it = list.Begin();
-  for (int i = 0; i < list.GetSize(); i++, ++it) {
+  for (auto it = list.Begin(); it != list.End(); ++it) {
     cout << *it << endl;
   }
 

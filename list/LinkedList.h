@@ -34,7 +34,12 @@ class LinkedList {
   class Iterator;
 
   Iterator Begin() { return Iterator(m_headNode); }
-  // TODO(Olster): Implement End()
+  Iterator End() {
+    // NOTE: The last node always points to null and End() returns
+    // the position one past the end, hence it must be null
+
+    return Iterator(nullptr);
+  }
  private:
   // Called by Add()
   void AddHelper(Node<T>* &node, T val);
@@ -77,6 +82,17 @@ class LinkedList<T>::Iterator {
     return m_currentNode->val;
   }
 
+  bool operator==(const Iterator& other) {
+    if (m_currentNode == other.m_currentNode) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool operator!=(const Iterator& other) {
+    return !(*this == other);
+  }
  private:
   Node<T>* m_currentNode = nullptr;
 };
