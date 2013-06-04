@@ -3,10 +3,20 @@
 
 namespace list {
 
+namespace {
+
+template <class T>
+struct Node {
+  T val;
+  Node* next = nullptr;
+};
+
+} // namespace
+
 template <class T>
 class LinkedList {
  public:
-  LinkedList();
+  LinkedList() {}
   ~LinkedList();
 
   void operator=(const LinkedList<T>& other) = delete;
@@ -15,40 +25,63 @@ class LinkedList {
 
   void Add(T val);
 
-  struct TNode {
-    T val;
-    TNode* next = nullptr;
-  };
-
-  TNode* GetHead();
-  TNode* GetNext();
-
   void Reverse();
 
   void Clear();
 
   int GetSize() const { return m_dSize; }
+
+  class Iterator;
+
+  Iterator Begin() { return Iterator(m_headNode); }
+  // TODO(Olster): Implement End()
  private:
-  // The work horse for Add()
-  void AddHelper(TNode* &node, T val);
+  // Called by Add()
+  void AddHelper(Node<T>* &node, T val);
 
-  // The workhorse for Reverse()
-  void ReverseHelper(TNode* current, TNode* prev);
+  // Called by Reverse()
+  void ReverseHelper(Node<T>* current, Node<T>* prev);
 
-  void ReleaseList(TNode* node);
+  void ReleaseList(Node<T>* node);
 
   int m_dSize = 0;
 
-  TNode* m_headNode = nullptr;
-  TNode* m_conductor = nullptr;
+  Node<T>* m_headNode = nullptr;
+  Node<T>* m_conductor = nullptr;
 };
 
-// -------------------- Implementation ----------------------
 template <class T>
-LinkedList<T>::LinkedList() {
-  m_headNode = nullptr;
-  m_conductor = m_headNode;
-}
+class LinkedList<T>::Iterator {
+ public:
+  Iterator();
+  Iterator(const Iterator& other)
+   : m_currentNode(other.m_currentNode) {}
+  explicit Iterator(Node<T>* node)
+   : m_currentNode(node) {}
+
+  Iterator& operator=(const Iterator& other) {
+    if (&other == this) {
+      return *this;
+    }
+
+    m_currentNode = other.m_currentNode;
+    return *this;
+  }
+
+  Iterator& operator++() {
+    m_currentNode = m_currentNode->next;
+    return *this;
+  }
+
+  T operator*() {
+    return m_currentNode->val;
+  }
+
+ private:
+  Node<T>* m_currentNode = nullptr;
+};
+
+// -------------------- Implementation --------------------
 
 template <class T>
 LinkedList<T>::~LinkedList() {
@@ -62,23 +95,6 @@ void LinkedList<T>::Add(T val) {
 }
 
 template <class T>
-typename LinkedList<T>::TNode* LinkedList<T>::GetHead() {
-  return m_headNode;
-}
-
-template <class T>
-typename LinkedList<T>::TNode* LinkedList<T>::GetNext() {
-  if (!m_conductor) {
-    m_conductor = m_headNode;
-    return m_conductor;
-  }
-
-  m_conductor = m_conductor->next;
-
-  return m_conductor;
-}
-
-template <class T>
 void LinkedList<T>::Reverse() {
   ReverseHelper(m_headNode, nullptr);
 }
@@ -89,9 +105,9 @@ void LinkedList<T>::Clear() {
 }
 
 template <class T>
-void LinkedList<T>::AddHelper(TNode* &node, T val) {
+void LinkedList<T>::AddHelper(Node<T>* &node, T val) {
   if (node == nullptr) {
-    node = new TNode;
+    node = new Node<T>;
 
     node->next = nullptr;
     node->val = val;
@@ -101,7 +117,7 @@ void LinkedList<T>::AddHelper(TNode* &node, T val) {
 }
 
 template <class T>
-void LinkedList<T>::ReverseHelper(TNode* current, TNode* prev) {
+void LinkedList<T>::ReverseHelper(Node<T>* current, Node<T>* prev) {
   if (current == nullptr) {
     // Let's make sure that the LL will be deleted properly
     // by setting its head to its end
@@ -120,7 +136,7 @@ void LinkedList<T>::ReverseHelper(TNode* current, TNode* prev) {
 
 
 template <class T>
-void LinkedList<T>::ReleaseList(TNode* node) {
+void LinkedList<T>::ReleaseList(Node<T>* node) {
   if (node == nullptr) {
     return;
   }
