@@ -2,6 +2,7 @@
 #define LIST_LINKEDLIST_H_
 
 // TODO(Olster): Read more on move semantics and perfect forwarding
+// add move constructor and assign operator to iterator
 
 namespace list {
 
@@ -102,7 +103,7 @@ class LinkedList<T>::Iterator {
     return m_currentNode->val;
   }
 
-  T& operator->() {
+  T* operator->() {
     return &m_currentNode->val;
   }
 

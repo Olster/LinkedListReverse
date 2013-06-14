@@ -1,4 +1,7 @@
-*~ #no temp files
+*~ # No temp files
+
+*.html # Code::Blocks build logs are html
+
 *.cbp
 *.depend
 *.layout
